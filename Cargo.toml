@@ -1,0 +1,8 @@
+[package]
+name = "CSVSM"
+version = "0.1.0"
+authors = ["Michael Bednarek <mbednarek360@protonmail.com>"]
+edition = "2018"
+
+[dependencies]
+colored = "*"
