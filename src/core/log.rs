@@ -15,6 +15,10 @@ pub fn cli_error() {
     throw_error(format!("{}{}{}", "Invalid command! See ", "csvsm help".bold().to_string(), " for a list of commands."));
 }
 
+pub fn dup_error(service: &String) {
+    throw_error(format!("{}{}{}", "Service ", service.bold(), " already exists in file."))
+}
+
 pub fn help() {
 
 }
