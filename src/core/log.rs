@@ -11,12 +11,21 @@ fn throw_error(err_str: String) {
     show_msg(err_str, "ERROR".to_string(), "red".to_string(), true);
 }
 
+fn print_info(info_str: String) {
+    show_msg(info_str, "INFO".to_string(), "green".to_string(), false);
+}
+
+// implementations
 pub fn cli_error() {
-    throw_error(format!("{}{}{}", "Invalid command! See ", "csvsm help".bold().to_string(), " for a list of commands."));
+    throw_error(format!("{}{}{}", "Invalid command! See ", "csvsm help".cyan().bold().to_string(), " for a list of commands."));
 }
 
 pub fn dup_error(service: &String) {
-    throw_error(format!("{}{}{}", "Service ", service.bold(), " already exists in file."))
+    throw_error(format!("{}{}{}", "Service ", service.cyan().bold(), " already exists in file."));
+}
+
+pub fn csv_error(file_name: &String) {
+
 }
 
 pub fn help() {
