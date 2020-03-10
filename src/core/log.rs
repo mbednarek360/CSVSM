@@ -24,9 +24,14 @@ pub fn dup_error(service: &String) {
     throw_error(format!("{}{}{}", "Service ", service.cyan().bold(), " already exists in file."));
 }
 
-pub fn csv_error(file_name: &String) {
-
+pub fn read_error(file_name: &String) {
+    throw_error(format!("{}{}{}", "File ", file_name.cyan().bold(), " cannot be read."));
 }
+
+pub fn csv_error(file_name: &String) {
+    throw_error(format!("{}{}{}", "File ", file_name.cyan().bold(), " contains invalid CSV."));
+}
+
 
 pub fn help() {
 

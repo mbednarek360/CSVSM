@@ -38,24 +38,25 @@ fn read_csv(file_name: &String) -> HashMap<String, u64> {
 pub fn add_service(service: &String, file_name: &String) {
 
     // read file
-    let mut input: HashMap<String, u64> = read_csv(file_name);
+    let input: HashMap<String, u64> = read_csv(file_name);
 
-    // ensure service not already in file
     if input.contains_key(service) {
         log::dup_error(service);
     }
 
-    // create unique id
-    let mut new_id: u64 = thread_rng().gen();
-    while contains_id(input.clone(), new_id) {
-        new_id = thread_rng().gen();
+    let rand_id: u64 = thread_rng().gen();
+
+    let mut new_id: u64 = 0;
+    while contains_id(input.copy(), new_id) {
+
     }
 
+    println!("{}", contains_id(input, 9));
+
     // check ids and create unique
-    input.insert(service.clone(), new_id);
 
     // write to file
-    println!("{:?}", input);
+
 }
 
 pub fn del_service(service: &String, file_name: &String) {
