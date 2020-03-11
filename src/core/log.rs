@@ -32,9 +32,21 @@ pub fn csv_error(file_name: &String) {
     throw_error(format!("{}{}{}", "File ", file_name.cyan().bold(), " contains invalid CSV."));
 }
 
+pub fn del_error(service: &String) {
+    throw_error(format!("{}{}{}", "Service ", service.cyan().bold(), " does not exist in file."));
+}
+
 // info implementations
-pub fn write_success(service: &String) {
+pub fn add_success(service: &String) {
     print_info(format!("{}{}{}", "Service ", service.cyan().bold(), " successfully added."))
+}
+
+pub fn del_success(service: &String) {
+    print_info(format!("{}{}{}", "Service ", service.cyan().bold(), " successfully removed."))
+}
+
+pub fn mut_success(service: &String) {
+    print_info(format!("{}{}{}", "Service ", service.cyan().bold(), " successfully mutated."))
 }
 
 

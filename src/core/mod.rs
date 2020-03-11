@@ -74,13 +74,57 @@ pub fn add_service(service: &String, file_name: &String) {
 
     // write to file
     write_csv(file_name, input);
-    log::write_success(service);
+    log::add_success(service);
 }
 
+// delete service from csv file
 pub fn del_service(service: &String, file_name: &String) {
 
+    // read file
+    let mut input: HashMap<String, u64> = read_csv(file_name);
+
+    // ensure service in file
+    if !input.contains_key(service) {
+        log::del_error(service);
+    }
+
+    // create unique id
+    let mut new_id: u64 = thread_rng().gen();
+    while contains_id(input.clone(), new_id) {
+        new_id = thread_rng().gen();
+    }
+
+    // check ids and create unique
+    input.remove(service);
+
+    // write to file
+    write_csv(file_name, input);
+    log::del_success(service);
 }
 
+// change service
 pub fn mut_service(service: &String, file_name: &String) {
 
+    // read file
+    let mut input: HashMap<String, u64> = read_csv(file_name);
+
+    // ensure service in file
+    if !input.contains_key(service) {
+        log::del_error(service);
+    }
+
+    // create unique id
+    let old_id: u64 = *input.get(service).unwrap();
+    let mut new_id: u64 = thread_rng().gen();
+    while contains_id(input.clone(), new_id) || new_id == old_id {
+        new_id = thread_rng().gen();
+    }
+
+    // check ids and create unique
+    input.remove(service);
+    input.insert(service.clone(), new_id);
+
+    // write to file
+    write_csv(file_name, input);
+    log::mut_success(service);
 }
