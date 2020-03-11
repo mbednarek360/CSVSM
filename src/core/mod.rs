@@ -1,5 +1,5 @@
 pub mod log;
-use csv::Reader;
+use csv::{ReaderBuilder, Writer};
 use std::collections::HashMap;
 use rand::{thread_rng, Rng};
 
@@ -7,9 +7,10 @@ fn contains_id(records: HashMap<String, u64>, id: u64) -> bool {
     return records.values().collect::<Vec<&u64>>().contains(&&id);
 }
 
+// csv to hashmap
 fn read_csv(file_name: &String) -> HashMap<String, u64> {
     let mut outp = HashMap::new();
-    let records = Reader::from_path(file_name);
+    let records = ReaderBuilder::new().has_headers(false).from_path(file_name);
 
     // check if error reading
     if records.is_err() {
@@ -26,15 +27,32 @@ fn read_csv(file_name: &String) -> HashMap<String, u64> {
         if (&service).as_ref().unwrap().len() != 2 {
             log::csv_error(file_name);
         }
+        let id = (&service).as_ref().unwrap().get(1).unwrap().to_string().parse::<u64>();
+        if id.is_err() {
+            log::csv_error(file_name)
+        }
 
         // insert pair
         outp.insert(
-            (*((&service).as_ref().unwrap().get(0).unwrap())).to_string(),
-            service.unwrap().get(1).unwrap().to_string().parse::<u64>().unwrap());
+            (*((&service).as_ref().unwrap().get(0).unwrap())).to_string(), id.unwrap());
     }
     outp
 }
 
+// hashmap to csv
+fn write_csv(file_name: &String, records: HashMap<String, u64>) {
+    let mut writer = Writer::from_path(file_name).unwrap();
+
+    // loop through records
+    for (service, id) in records {
+        writer.write_record(&[service, id.to_string()]).unwrap();
+    }
+
+    // clear buffer
+    writer.flush().unwrap();
+}
+
+// add service to csv file
 pub fn add_service(service: &String, file_name: &String) {
 
     // read file
@@ -55,7 +73,8 @@ pub fn add_service(service: &String, file_name: &String) {
     input.insert(service.clone(), new_id);
 
     // write to file
-    println!("{:?}", input);
+    write_csv(file_name, input);
+    log::write_success(service);
 }
 
 pub fn del_service(service: &String, file_name: &String) {

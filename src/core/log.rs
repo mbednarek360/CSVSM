@@ -15,7 +15,7 @@ fn print_info(info_str: String) {
     show_msg(info_str, "INFO".to_string(), "green".to_string(), false);
 }
 
-// implementations
+// error implementations
 pub fn cli_error() {
     throw_error(format!("{}{}{}", "Invalid command! See ", "csvsm help".cyan().bold().to_string(), " for a list of commands."));
 }
@@ -30,6 +30,11 @@ pub fn read_error(file_name: &String) {
 
 pub fn csv_error(file_name: &String) {
     throw_error(format!("{}{}{}", "File ", file_name.cyan().bold(), " contains invalid CSV."));
+}
+
+// info implementations
+pub fn write_success(service: &String) {
+    print_info(format!("{}{}{}", "Service ", service.cyan().bold(), " successfully added."))
 }
 
 
