@@ -3,6 +3,7 @@ use csv::{ReaderBuilder, Writer};
 use std::collections::HashMap;
 use rand::{thread_rng, Rng};
 
+// check if id is already used in records
 fn contains_id(records: HashMap<String, u64>, id: u64) -> bool {
     return records.values().collect::<Vec<&u64>>().contains(&&id);
 }

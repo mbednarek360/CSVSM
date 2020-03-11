@@ -3,7 +3,7 @@ mod core;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    //if args.len() != 4 { core::log::cli_error(); }
+    if args.len() != 4 && &args[1] != "help" { core::log::cli_error(); }
     match &args[1] as &str {
         "add" => core::add_service(&args[2], &args[3]),
         "del" => core::del_service(&args[2], &args[3]),

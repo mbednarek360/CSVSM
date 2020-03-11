@@ -49,7 +49,19 @@ pub fn mut_success(service: &String) {
     print_info(format!("{}{}{}", "Service ", service.cyan().bold(), " successfully mutated."))
 }
 
-
+// print usage information
 pub fn help() {
 
+    // generate package info
+    let name: ColoredString = env!("CARGO_PKG_NAME").bright_blue().bold();
+    let version: ColoredString = format!("v{}", env!("CARGO_PKG_VERSION")).purple();
+    let repo: ColoredString = env!("CARGO_PKG_REPOSITORY").white().dimmed();
+
+    // print compiled lines
+    println!("{}\n", "Available Commands:".bright_blue().bold());
+    println!("\t{} {} {} {}", "add".green().bold(), "<service> <file>".cyan(), "|".bright_black(), "Add service to csv file.".white());
+    println!("\t{} {} {} {}", "del".green().bold(), "<service> <file>".cyan(), "|".bright_black(), "Remove service from csv file.".white());
+    println!("\t{} {} {} {}", "mut".green().bold(), "<service> <file>".cyan(), "|".bright_black(), "Change id of service in csv file.".white());
+    println!("\n{} {}", name, version);
+    println!("{}", repo)
 }
